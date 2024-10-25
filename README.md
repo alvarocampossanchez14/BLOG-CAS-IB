@@ -1,3 +1,5 @@
+![IB World School Logo](https://www.ibo.org/globalassets/new-structure/icons-and-logos/images/ib-world-school-logo-1-colour.png)
+
 # Blog CAS - IB Diploma Program
 
 Este proyecto es un blog desarrollado con [Laravel](https://laravel.com/) para la asignatura **Creatividad, Actividad y Servicio (CAS)** del programa de Diploma del Bachillerato Internacional (IB). El blog permite a los estudiantes documentar y reflexionar sobre sus experiencias y actividades de CAS, proporcionando un espacio en el que pueden compartir sus logros, aprendizajes y reflexiones.
@@ -39,5 +41,5 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
 1. **Clona el repositorio**:
 
    ```bash
-   git clone https://github.com/tu_usuario/tu_repositorio.git
+   git clone https://github.com/alvarocampossanchez14/BLOG-CAS-IB.git
    cd tu_repositorio
