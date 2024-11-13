@@ -13,10 +13,11 @@
     @vite('resources/css/app.css')
     @vite('resources/css/background.css')
 </head>
-<body class="font-sans antialiased text-text min-h-screen  bg-background">
+<body class="font-sans antialiased text-text  bg-background">
 
     @include('components.navbar')
     @yield('content')
+    @include('components.footer')
 
     @vite('resources/js/app.js')
     @stack('scripts')

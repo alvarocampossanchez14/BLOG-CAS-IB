@@ -1,14 +1,14 @@
 <header class="bg-primary/20 shadow-2xl shadow-black">
     <nav class="mx-auto flex max-w-7xl items-center justify-center gap-x-8 lg:justify-between  p-6 py-4 lg:px-8" aria-label="Global">
         <div class="flex items-center gap-x-12">
-            <a href="#" class="-m-1.5 p-1.5">
+            <a href="{{route('home')}}" class="-m-1.5 p-1.5">
                 <span class="sr-only">Your Company</span>
                 <img class="lg:h-16 h-10 w-auto" src="https://stgeorgemadrid.com/wp-content/uploads/2022/02/dp-programme-logo-es-1.png" alt="">
             </a>
             <div class="hidden lg:flex lg:gap-x-12">
                 <a href="#" class="text-sm font-semibold leading-6 text-text">¿Qué es IB?</a>
                 <a href="#" class="text-sm font-semibold leading-6 text-text">Proyectos</a>
-                <a href="#" class="text-sm font-semibold leading-6 text-text">Marketplace</a>
+                <a href="#" class="text-sm font-semibold leading-6 text-text">Actividades</a>
                 <a href="#" class="text-sm font-semibold leading-6 text-text">Contacto</a>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <div class="space-y-2 py-6">
                     <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">¿Qué es IB?</a>
                     <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Proyectos</a>
-                    <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Marketplace</a>
+                    <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Actividades</a>
                     <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Contacto</a>
                 </div>
                 </div>
@@ -50,3 +50,35 @@
         </div>
   </div>
 </header>
+
+
+<script>
+    for (let i = 0; i < zombiesPowers.length; i++) {
+        if(zombiesPowers[i] > humansPowers[i]) {
+            if ( i + 1 < zombiesPowers.length) {
+                zombiesPowers[i + 1] += zombiesPowers[i];
+            }
+        } else if (humansPowers[i] > zombiesPowers[i]) {
+            if(i + 1 < humansPowers.length) {
+                humansPowers[i + 1 ] += humansPowers[i];
+            }
+        }
+    }
+
+    for (let i = 0; i < zombiesPowers.length; i++) {
+    if(zombiesPowers[i] > humansPowers[i]) {
+
+      if ( i + 1 < zombiesPowers.length) {
+        zombiesPowers[i + 1] += zombiesPowers[i];
+      }
+
+    } else if (humansPowers[i] > zombiesPowers[i]) {
+
+        if(i + 1 < humansPowers.length) {
+        humansPowers[i + 1] += humansPowers[i];
+      }
+    }
+
+  }
+
+</script>
