@@ -24,26 +24,24 @@
     </nav>
 
     <div id="navbar-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 z-10"></div>
-        <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="fixed inset-0 z-10 bg-black/20 backdrop-blur-2xl"></div>
+        <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-surface/70  text-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="#" class="-m-1.5 p-1.5">
-                    <img class="h-8 w-auto" src="https://stgeorgemadrid.com/wp-content/uploads/2022/02/dp-programme-logo-es-1.png" alt="">
+                <a href="{{ route('home') }}" class="-m-1.5 p-1.5 flex mx-auto">
+                    <img class="h-12 w-auto" src="/dp_programa.png" alt="Logo del programa DP">
                 </a>
                 <button id="navbar-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                     <span class="sr-only">Close menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
+                    <i class="fas fa-times text-white text-xl"></i>
                 </button>
             </div>
-            <div class="mt-6 flow-root ">
+            <div class="mt-6 flow-root mx-auto">
                 <div class="-my-6 divide-y divide-gray-500/10">
-                <div class="space-y-2 py-6">
-                    <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">¿Qué es IB?</a>
-                    <a href="{{ route('projects.index') }}" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Proyectos</a>
-                    <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Actividades</a>
-                    <a href="#" class="-mx-3 block text-sm font-semibold leading-6 text-gray-700">Contacto</a>
+                <div class="space-y-2 py-6 text-md">
+                    <a href="{{ route('about') }}" class="-mx-3 block  font-semibold leading-6 hover:text-white/70 ">Sobre mí</a>
+                    <a href="{{ route('ib-cas') }}" class="-mx-3 block  font-semibold leading-6 hover:text-white/70 ">¿Qué es IB?</a>
+                    <a href="{{ route('projects.index') }}" class="-mx-3 block  font-semibold leading-6 hover:text-white/70">Proyectos</a>
+                    <a href="{{ route('activities.index') }}" class="-mx-3 block  font-semibold leading-6 hover:text-white/70">Actividades</a>
                 </div>
                 </div>
             </div>
@@ -51,3 +49,12 @@
   </div>
 </header>
 
+<script>
+      document.getElementById('navbar-open').addEventListener('click', function() {
+        document.getElementById('navbar-menu').classList.remove('hidden');
+    });
+
+    document.getElementById('navbar-close').addEventListener('click', function() {
+        document.getElementById('navbar-menu').classList.add('hidden');
+    });
+</script>

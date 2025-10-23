@@ -43,8 +43,8 @@ jobs:
         key: ${{ secrets.VPS_KEY }}
         script: |
           cd /var/www/blogcas.alvarocampos.dev
-          git fetch origin develop
-          git reset --hard origin/develop
+          git fetch origin main
+          git reset --hard origin/main
           composer install --no-dev --optimize-autoloader
           php artisan migrate --force
           npm ci
