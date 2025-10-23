@@ -6,19 +6,21 @@
         <div class="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-background shadow-xl shadow-indigo-600/10 ring-1 ring-background sm:-mr-80 lg:-mr-96" aria-hidden="true"></div>
         <div class="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
             <div class="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
-                <h1 class="max-w-2xl text-balance text-5xl font-semibold italic tracking-tight text-text sm:text-6xl lg:col-span-2 xl:col-auto"> We’re changing the way people connect through CAS</h1>            
+                <h1 class="max-w-2xl text-balance text-5xl font-semibold italic tracking-tight text-text sm:text-6xl lg:col-span-2 xl:col-auto"> We’re changing the way people connect through CAS</h1>
                 <div class="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
-                    <p class="text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+                    <p class="text-pretty text-lg font-medium text-gray-400 sm:text-xl/8">
                         Bienvenido al blog de Álvaro Campos Sánchez, donde comparto mi experiencia en la asignatura de CAS del IB Diploma. Aquí exploro cómo el enfoque en Creatividad, Actividad y Servicio no solo enriquece el aprendizaje académico, sino que también transforma la forma en que conectamos con la comunidad y desarrollamos habilidades clave para el futuro.
                     </p>
                     <div class="mt-10 flex items-center gap-x-6">
-                        <a href="#" class="text-sm font-semibold leading-6 text-text bg-primary p-2 rounded-md hover:scale-105">
-                            Ver Proyectos
-                            <i class="fa-solid fa-eye ml-2"></i>
+                        <a href="{{ route('projects.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg shadow-md text-sm font-semibold text-primary transition-colors duration-300
+                            bg-gray-800 border border-gray-700 hover:bg-primary hover:scale-105 hover:border-gray-200/50 hover:text-white
+                            focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background">
+                            <i class="fas fa-project-diagram mr-2"></i>
+                            Ver todos los Proyectos
                         </a>
                     </div>
                 </div>
-                <img src="http://localhost:8000/images/foto_1.jpg" alt="CAS Blog Image" class="mt-10 aspect-[6/5] w-full max-w-lg rounded-2xl object-cover sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36">
+                <img src="{{ asset('/images/futbol.jpg') }}" alt="CAS Blog Image" class="mt-10 aspect-[6/5] w-full max-w-lg rounded-2xl object-cover sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36">
             </div>
         </div>
     </div>
@@ -28,40 +30,12 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-balance text-4xl font-semibold tracking-tight text-text sm:text-5xl">Proyectos por y para la comunidad</h2>
-            <p class="mt-2 text-lg leading-8 text-textSecondary">Learn how to grow your business with our expert advice.</p>
+            <p class="mt-2 text-lg leading-8 text-textSecondary">Proyectos CAS creados para apoyar a la comunidad y crecer como persona durante el Bachillerato Internacional.</p>
         </div>
 
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            @foreach($articles as $article)
-            <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80 hover:scale-105">
-                <img src="{{ asset('storage/' . $article->image) }}" alt="Article Image" class="absolute inset-0 -z-10 h-full w-full object-cover">
-                <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
-
-                <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                    <time datetime="2020-03-16" class="mr-8 font-semibold">{{ $article->created_at->format('M d, Y') }}</time>
-                    <div class="-ml-4 flex items-center gap-x-4">
-                        <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50">
-                            <circle cx="1" cy="1" r="1" />
-                        </svg>
-                        <div class="flex gap-x-2.5">
-                            <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Author Image" class="h-6 w-6 flex-none rounded-full bg-white/10">
-                            <span class="font-semibold">Álvaro Campos</span>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="mt-3 leading-6">
-                    <a href="{{ route('articles.show', $article->slug) }}" class="flex flex-col">
-                        <span class="text-xl text-text font-semibold">{{ $article->title }}</span>
-                        <span class="text-md text-text font-semibold mt-5">
-                            <span class="bg-primary/50 p-2 rounded-md">
-                                Más información
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-                        </span>
-                    </a>
-                </h3>
-            </article>
+            @foreach($projects as $project)
+            <x-project-card :project="$project" />
             @endforeach
         </div>
     </div>

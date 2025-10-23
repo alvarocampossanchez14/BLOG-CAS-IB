@@ -8,9 +8,9 @@ class CreateArticleTagTable extends Migration
 {
     public function up()
     {
-        Schema::create('article_tag', function (Blueprint $table) {
+        Schema::create('project_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->constrained()->onDelete('cascade'); // Relación con la tabla articles
+            $table->foreignId('project_id')->constrained()->onDelete('cascade'); // Relación con la tabla projects
             $table->foreignId('tag_id')->constrained()->onDelete('cascade'); // Relación con la tabla tags
             $table->timestamps();
         });
@@ -18,6 +18,6 @@ class CreateArticleTagTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('article_tag');
+        Schema::dropIfExists('project_tag');
     }
 }

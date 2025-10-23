@@ -1,0 +1,55 @@
+name: Deploy Develop to VPS
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, xml, bcmath, gd, curl, zip, fileinfo, ctype
+        tools: composer
+    
+    - name: Setup Composer
+      run: composer install --no-dev --optimize-autoloader
+
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies and build
+      run: |
+        npm ci
+        npm run build
+        composer install --no-dev --optimize-autoloader
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_KEY }}
+        script: |
+          cd /var/www/blogcas.alvarocampos.dev
+          git fetch origin develop
+          git reset --hard origin/develop
+          composer install --no-dev --optimize-autoloader
+          php artisan migrate --force
+          npm ci
+          npm run build
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          sudo systemctl reload nginx
