@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Proyectos CAS IB | Blog CAS del Bachillerato Internacional')
+
+@section('meta_description', 'Explora proyectos CAS (Creatividad, Actividad y Servicio) del Programa del Diploma del IB. Descubre experiencias enriquecedoras y reflexiones sobre las actividades CAS.')
+
 @section('meta_tags')
-    <title>Proyectos CAS | Mi Portafolio</title>
-    <meta name="description" content="Explora una colección de proyectos y actividades de creatividad, actividad y servicio (CAS) completados.">
-    
-    <!-- <script type="application/ld+json">
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
