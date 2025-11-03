@@ -73,7 +73,7 @@ class ProjectController extends Controller
             'lo_6' => 'nullable|boolean',
             'lo_7' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'evidences.*' => 'nullable|file|max:10240',
+            'evidences.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,pdf|max:10240', // 10MB por archivo, permite PDF
             'is_published' => 'boolean',
         ]);
 
@@ -84,8 +84,7 @@ class ProjectController extends Controller
         // Subir la imagen y añadir la ruta a los datos validados
         if ($request->hasFile('image')) {
             Log::info('Imagen recibida para proyecto.');
-            $imagePath = $request->file('image')->store('projects/images', 'public');
-            $validatedData['image'] = $imagePath;
+            $validatedData['image'] = $request->file('image')->store('projects/images', 'public');
         }
 
         foreach (range(1, 7) as $i) {
@@ -129,41 +128,50 @@ class ProjectController extends Controller
 
      public function update(Request $request, Project $project)
     {
-        // 1. Validar los datos de la solicitud
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'description' => 'required|string',
-            'creativity' => 'nullable|string',
-            'activity' => 'nullable|string',
-            'service' => 'nullable|string',
-            'image' => 'nullable|image|max:2048', // 2MB
-            'evidences' => 'nullable|array',
-            'evidences.*' => 'file|max:5120', // 5MB por archivo
-            'reflection' => 'nullable|string',
-            'evaluation_and_objectives' => 'nullable|string',
-            'status' => ['required', Rule::in(['planned', 'ongoing', 'completed'])],
-            'is_published' => 'nullable|boolean',
-            'supervisor_name' => 'nullable|string|max:255',
-            'supervisor_contact' => 'nullable|string|max:255',
-            'lo_1' => 'nullable|boolean',
-            'lo_2' => 'nullable|boolean',
-            'lo_3' => 'nullable|boolean',
-            'lo_4' => 'nullable|boolean',
-            'lo_5' => 'nullable|boolean',
-            'lo_6' => 'nullable|boolean',
-            'lo_7' => 'nullable|boolean',
-        ]);
+        Log::info('--- INICIO UPDATE PROYECTO ---');
+        Log::info('Archivos recibidos:', ['files' => $request->file('evidences')]);
+        Log::info('Request all:', $request->all());
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'location' => 'nullable|string|max:255',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'description' => 'required|string',
+                'creativity' => 'nullable|string',
+                'activity' => 'nullable|string',
+                'service' => 'nullable|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+                'evidences' => 'nullable|array',
+                'evidences.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,pdf|max:10240', // 10MB por archivo, permite PDF
+                'reflection' => 'nullable|string',
+                'evaluation_and_objectives' => 'nullable|string',
+                'status' => ['required', Rule::in(['planned', 'ongoing', 'completed'])],
+                'is_published' => 'nullable|boolean',
+                'supervisor_name' => 'nullable|string|max:255',
+                'supervisor_contact' => 'nullable|string|max:255',
+                'lo_1' => 'nullable|boolean',
+                'lo_2' => 'nullable|boolean',
+                'lo_3' => 'nullable|boolean',
+                'lo_4' => 'nullable|boolean',
+                'lo_5' => 'nullable|boolean',
+                'lo_6' => 'nullable|boolean',
+                'lo_7' => 'nullable|boolean',
+            ]);
+            Log::info('Validación completada en update.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Error de validación:', $e->errors());
+            throw $e;
+        }
 
         // 2. Manejar la subida de la nueva imagen de portada
         if ($request->hasFile('image')) {
-            // Eliminar la imagen anterior si existe
-            if ($project->image_path) {
-                Storage::delete($project->image_path);
+            Log::info('Imagen recibida en update.');
+            // Borrar imagen anterior si existe
+            if ($project->image) {
+                Storage::disk('public')->delete($project->image);
             }
-            $validatedData['image_path'] = $request->file('image')->store('project_images');
+            $validatedData['image'] = $request->file('image')->store('projects/images', 'public');
         }
 
         // 3. Generar el slug a partir del título y evitar duplicados
@@ -175,17 +183,27 @@ class ProjectController extends Controller
 
         // 5. Manejar la subida de nuevas evidencias
         if ($request->hasFile('evidences')) {
+            Log::info('Procesando evidencias en update.');
             foreach ($request->file('evidences') as $file) {
-                $path = $file->store('project_evidences');
+                Log::info('Procesando archivo:', [
+                    'originalName' => $file->getClientOriginalName(),
+                    'mimeType' => $file->getClientMimeType(),
+                    'size' => $file->getSize()
+                ]);
+                $path = $file->store('projects/evidences', 'public');
                 $project->evidences()->create([
                     'file_path' => $path,
                     'file_name' => $file->getClientOriginalName(),
+                    'mime_type' => $file->getClientMimeType(),
                 ]);
             }
+        } else {
+            Log::info('No se recibieron evidencias en update.');
         }
 
+        Log::info('--- FIN UPDATE PROYECTO ---');
         // 6. Redirigir al usuario
-        return redirect()->route('projects.show', $project->id)->with('success', 'Proyecto actualizado exitosamente.');
+        return redirect()->route('projects.show', $project->slug)->with('success', 'Proyecto actualizado exitosamente.');
     }
 
     public function destroy(Project $project)
